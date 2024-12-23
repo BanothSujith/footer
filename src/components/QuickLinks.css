@@ -1,0 +1,12 @@
+.quick-links{
+    padding: .3em 0 0 .1em;
+}
+.quick-links a{
+    padding: .2em;
+    color:black;
+    text-decoration: none;
+}
+
+.quick-links a:hover{
+    color: rgb(138, 138, 138);
+}
