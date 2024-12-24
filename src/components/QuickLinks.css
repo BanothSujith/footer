@@ -10,3 +10,7 @@
 .quick-links a:hover{
     color: rgb(138, 138, 138);
 }
+
+.quick-links a:active{
+    color:brown;
+}

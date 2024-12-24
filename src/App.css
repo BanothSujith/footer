@@ -4,6 +4,7 @@
     scroll-behavior: smooth;
     transition: all .1s;
 }
+
 .footer{
     /* background-image: url('../public/fbg.jpg'); */
     background: linear-gradient(rgb(236, 234, 234),rgb(184, 184, 184));
@@ -97,10 +98,13 @@ width:30em;
 
   .footer-imp{
     flex-basis: content;
-    padding:.3em 2em .2em .2em;
+    padding:.3em 2em .0em .2em;
   }
-  
+  .followUs{
+    margin-top: 1em;
+  }
   .followUs a{
+    
     padding:0 1em 0 0;
     color: #333;
   }
@@ -113,3 +117,91 @@ width:30em;
     margin-top: 1em;
     text-align: center;
   }
+
+
+@media (max-width: 768px) {
+  
+  
+  .footer-container{
+    flex-direction: column;
+    row-gap:0em;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-container h2{
+    font-size: 1em;
+    padding: .3em .2em;
+
+  }
+  .footer-ourstory{
+    flex-basis:auto;
+    padding: .3em 0;
+  }
+  
+  .footer-locateus{
+    flex-basis:auto;
+    padding: .3em 0;
+  }
+
+  .footer-quick{
+    flex-basis:auto;
+    padding: .3em 0;
+  }
+
+  .footer-imp{
+    flex-basis:auto;
+    border-bottom: 1px solid black;
+    padding: .3em 0;
+
+  }
+  
+  
+  .footer-container section > p,
+  .footer-container section > address,
+  .footer-container section > div {
+    display: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    max-height: 0;
+  }
+  @keyframes expand {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      max-height: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 1000px;
+    }
+  }
+  .footer-container section.active > p,
+  .footer-container section.active > address,
+  .footer-container section.active > div {
+    display: block;
+    animation: expand 0.5s forwards;
+  }
+  
+  .footer-container section
+{
+border-top :1px solid black; 
+}
+
+  .footer-heading {
+    cursor: pointer;
+  }
+  .fheading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sign{
+    font-size: 1.5em;
+    padding-right: .2em;
+  }
+
+}
+

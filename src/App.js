@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import QuickLinks from './components/QuickLinks';
 import './App.css';
 import Links from './links';
@@ -7,53 +7,67 @@ import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaCloudSun } from "react-icons/fa";
-import { WiHumidity } from "react-icons/wi";
 import { useJaipurWeather } from "./wheatheAPI";
+import { useState, useEffect} from "react";
+import Form from './components/Form';
 
 
 function App() {
   const { temperature, humidity, windSpeed } = useJaipurWeather();
+  const [activeSection, setActiveSection] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleSection = (sectionName) => {
+    setActiveSection((prevSection) => (prevSection === sectionName ? null : sectionName));
+  };
+
   return (
     <footer className='footer'>
-      <div className="footer-header"> 
-      <h2> Stay in Touch </h2>
-      <p>Subscribe to our Newsletter to receive best deals and offers</p>
-      <form className="footer-form">
-        <input type="email" placeholder="Enter your email..." />
-        <button type="submit">Subscribe</button>
-        </form>
-        </div>
+      <Form/>
+      
       <div className="footer-container">
-      <section className="footer-ourstory">
-        <h2>Our Story</h2>
-        <p>
-          The underlying theme and vision for all the ventures pursued by
-          Mahindra Hotel & Residences India Limited.
-        </p>
+      <section className={`footer-ourstory ${activeSection === 'ourStory' ? 'active' : ''}`}>
+      <h2  className="fheading" onClick={isMobile ? () => toggleSection('ourStory') : null}>
+  <span>Our Story </span><span className='sign'>{isMobile && (activeSection === 'ourStory' ? ' -' : ' +')}</span>
+</h2>
+      {(activeSection === 'ourStory'  || !isMobile) && (
+            <p>
+              The underlying theme and vision for all the ventures pursued by
+              Mahindra Hotel & Residences India Limited.
+            </p>
+          )}
       </section>
 
-      <section className="footer-locateus">
-        <h2>Locate Us</h2>
-        <address>
-          1234 Mahindra Towers, Mumbai, Maharashtra, India
-        </address>
-        <p>Landline:+917988483737</p>
-        <p>Email: Example.com</p> 
+      <section className={`footer-locateus ${activeSection === 'locateUs' ? 'active' : ''}`}>
+      <h2 className='fheading' onClick={isMobile ?() => toggleSection('locateUs') : null}><span>Locate Us </span><span className='sign'>{isMobile && (activeSection === 'locateUs' ? ' -' : ' +')}</span></h2>
+      {(activeSection === 'locateUs' || !isMobile) && (
+            <>
+              <address>1234 Mahindra Towers, Mumbai, Maharashtra, India</address>
+              <p>Landline: +917988483737</p>
+              <p>Email: Example.com</p>
+            </>
+          )}
       </section>
 
-      <section className="footer-quick">
-        <h2>Quick Links</h2>
-        {Links.map((link, index) => (
-          <QuickLinks key={index} links={link} />
-        ))}
+      <section className={`footer-quick ${activeSection === 'quickLinks' ? 'active' : ''}`}>
+      <h2 className='fheading' onClick={isMobile? () => toggleSection('quickLinks') : null}><span >Quick Links</span> <span className='sign'>{isMobile && (activeSection === 'quickLinks' ? ' -' : ' +')}</span></h2>
+      {(activeSection === 'quickLinks' || !isMobile) &&
+            Links.map((link, index) => <QuickLinks key={index} links={link} />)}
       </section>
 
-      <section className="footer-imp">
-        <h2>Important Links</h2>
-        {Links.map((link, index) => (
-          <QuickLinks key={index} links={link} />
-        ))}
-        <br/>
+      <section className={`footer-imp ${activeSection === 'importantLinks' ? 'active' : ''}`}>
+      <h2 className='fheading' onClick={() => toggleSection('importantLinks')}><span>Important Links</span> <span className='sign'>{isMobile && (activeSection === 'importantLinks' ? ' -' : ' +')}</span></h2>
+      {activeSection === 'importantLinks' &&
+            Links.map((link, index) => <QuickLinks key={index} links={link} />)}
+        
          <div className='followUs' >
         <h2>Follow Us</h2>
         <a href="https://www.facebook.com/">
@@ -91,9 +105,9 @@ function App() {
         `Loading humidity...`
       )}
       </div>
-
+      
           </div>
-        
+
       </section>
       </div>
 
